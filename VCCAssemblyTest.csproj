@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <Version>1.0</Version>
+    <!-- Ez lesz a neve a .gha fájl nak -->
+    <Title>vcc_grasshopper_plugin</Title>
+    <Description>Description of EmptyAssembly</Description>
+    <TargetExt>.gha</TargetExt>
+  </PropertyGroup>
+
+  <!-- Ez a blokk referencia a Grasshopper csomagra -->
+  <ItemGroup>
+    <PackageReference Include="Grasshopper" Version="7.13.21348.13001" IncludeAssets="compile;build" />
+  </ItemGroup>
+
+  <!-- Ez a blokk elmásolja a build után a .gha fájlt a Grasshopper\Libraries mappába, így utána a Rhinot indítva automatikusan betöltődik az aktuális plugin -->
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="xcopy /y &quot;$(TargetDir)$(ProjectName).gha&quot; &quot;$(USERPROFILE)\AppData\Roaming\Grasshopper\Libraries\&quot;" />
+	</Target>
+
+
+</Project>
